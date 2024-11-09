@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: honey-do-list
+  namespace: honey-do       # Use the honey-do namespace
+spec:
+  replicas: 2               # Number of pods (replicas) to run
+  selector:
+    matchLabels:
+      app: honey-do-list
+  template:
+    metadata:
+      labels:
+        app: honey-do-list
+    spec:
+      containers:
+      - name: honey-do-list
+        image: <your-dockerhub-username>/honey-do-list:latest
+        ports:
+        - containerPort: 5000   # Flask runs on port 5000
+        env:
+        - name: FLASK_ENV
+          value: "production"   # Environment variable for Flask
+        - name: FLASK_RUN_HOST
+          value: "0.0.0.0"
+        - name: FLASK_RUN_PORT
+          value: "5000"

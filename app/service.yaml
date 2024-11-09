@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: honey-do-list
+  namespace: honey-do       # Use the honey-do namespace
+spec:
+  selector:
+    app: honey-do-list
+  ports:
+  - protocol: TCP
+    port: 80                # External port to expose
+    targetPort: 5000        # Internal port Flask listens on
+  type: NodePort         # Use LoadBalancer for cloud providers, NodePort for local
