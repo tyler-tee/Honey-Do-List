@@ -4,7 +4,7 @@ metadata:
   name: honey-do-list
   namespace: honey-do       # Use the honey-do namespace
 spec:
-  replicas: 2               # Number of pods (replicas) to run
+  replicas: 1               # Aligning replicas with service.yaml
   selector:
     matchLabels:
       app: honey-do-list
@@ -14,14 +14,24 @@ spec:
         app: honey-do-list
     spec:
       containers:
-      - name: honey-do-list
-        image: <your-dockerhub-username>/honey-do-list:latest
+      - name: honey-do-list-container
+        image: tyler-tee/honey-do-list:1.0.0 # Updated to match service.yaml
         ports:
-        - containerPort: 5000   # Flask runs on port 5000
-        env:
+        - containerPort: 5000               # Flask runs on port 5000
+        resources:                          # Aligned resource requests/limits
+          requests:
+            memory: "256Mi"                 # Request 256 MiB of memory
+            cpu: "500m"                     # Request 500 millicores of CPU
+            ephemeral-storage: "2Gi"
+          limits:
+            memory: "512Mi"                 # Limit to 512 MiB of memory
+            cpu: "500m"                     # Limit to 500 millicores of CPU
+            ephemeral-storage: "2Gi"
+        env:                                # Additional environment variables for Flask
         - name: FLASK_ENV
-          value: "production"   # Environment variable for Flask
+          value: "production"               # Setting Flask environment to production
         - name: FLASK_RUN_HOST
           value: "0.0.0.0"
         - name: FLASK_RUN_PORT
           value: "5000"
+      automountServiceAccountToken: false   # Aligned with service.yaml
