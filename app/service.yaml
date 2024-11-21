@@ -4,6 +4,7 @@ metadata:
   name: honey-do-list
   namespace: honey-do       # Use the honey-do namespace
 spec:
+  automountServiceAccountToken: false
   selector:
     app: honey-do-list
   ports:
