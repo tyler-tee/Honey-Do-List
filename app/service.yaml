@@ -21,8 +21,10 @@ spec:
         resources:
           requests:
             memory: "256Mi"     # Request 256 MiB of memory
-            cpu: "250m"         # Request 250 millicores of CPU
+            cpu: "500m"         # Request 250 millicores of CPU
+            ephemeral-storage: "2Gi"
           limits:
             memory: "512Mi"     # Limit to 512 MiB of memory
             cpu: "500m"         # Limit to 500 millicores of CPU
             ephemeral-storage: "2Gi" # Limit to 2 GiB of ephemeral storage
+      automountServiceAccountToken: false
